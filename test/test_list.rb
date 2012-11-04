@@ -4,12 +4,12 @@ require 'helper'
 ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
 ActiveRecord::Schema.verbose = false
 
-def setup_db(position_options = {})
+def setup_db(slot_options = {})
   # AR caches columns options like defaults etc. Clear them!
   ActiveRecord::Base.connection.schema_cache.clear!
   ActiveRecord::Schema.define(:version => 1) do
     create_table :mixins do |t|
-      t.column :pos, :integer, position_options
+      t.column :pos, :integer, slot_options
       t.column :active, :boolean, :default => true
       t.column :parent_id, :integer
       t.column :parent_type, :string
@@ -241,7 +241,7 @@ class DefaultScopedTest < ActsAsListTestCase
     assert_equal 4, new4.pos
   end
 
-  def test_update_position
+  def test_update_slot
     assert_equal [1, 2, 3, 4], DefaultScopedMixin.find(:all).map(&:id)
     DefaultScopedMixin.find(2).update_attributes!(:pos => 4)
     assert_equal [1, 3, 4, 2], DefaultScopedMixin.find(:all).map(&:id)
@@ -335,7 +335,7 @@ class DefaultScopedWhereTest < ActsAsListTestCase
     assert_equal 4, new4.pos
   end
 
-  def test_update_position
+  def test_update_slot
     assert_equal [1, 2, 3, 4], DefaultScopedWhereMixin.where(:active => false).find(:all).map(&:id)
     DefaultScopedWhereMixin.where(:active => false).find(2).update_attributes!(:pos => 4)
     assert_equal [1, 3, 4, 2], DefaultScopedWhereMixin.where(:active => false).find(:all).map(&:id)
@@ -358,7 +358,7 @@ class MultiDestroyTest < ActsAsListTestCase
   # example:
   #
   #   class TodoList < ActiveRecord::Base
-  #     has_many :todo_items, :order => "position"
+  #     has_many :todo_items, :order => "slot"
   #     accepts_nested_attributes_for :todo_items, :allow_destroy => true
   #   end
   #
@@ -375,7 +375,7 @@ class MultiDestroyTest < ActsAsListTestCase
   #   {id: 2, _destroy: true}
   # ]
   #
-  # Save toto_list, the position of item #3 should eql 1.
+  # Save toto_list, the slot of item #3 should eql 1.
   #
   def test_destroy
     new1 = DefaultScopedMixin.create

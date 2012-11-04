@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.email       = ['swanand.pagnis@gmail.com']
   s.homepage    = 'http://github.com/swanandp/acts_as_list'
   s.summary     = %q{A gem allowing a active_record model to act_as_list.}
-  s.description = %q{This "acts_as" extension provides the capabilities for sorting and reordering a number of objects in a list. The class that has this specified needs to have a "position" column defined as an integer on the mapped database table.}
+  s.description = %q{This "acts_as" extension provides the capabilities for sorting and reordering a number of objects in a list. The class that has this specified needs to have a "slot" column defined as an integer on the mapped database table.}
   s.rubyforge_project = 'acts_as_list'
 
 

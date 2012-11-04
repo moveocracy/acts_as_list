@@ -42,7 +42,7 @@ module Shared
     def test_injection
       item = ListMixin.new("parent_id"=>1)
       assert_equal '"mixins"."parent_id" = 1', item.scope_condition
-      assert_equal "pos", item.position_column
+      assert_equal "pos", item.slot_column
     end
 
     def test_insert_at

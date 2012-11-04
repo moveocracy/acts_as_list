@@ -42,7 +42,7 @@ module Shared
     def test_injection
       item = ListMixin.new(:parent_id => 1)
       assert_equal '"mixins"."parent_id" = 1', item.scope_condition
-      assert_equal "pos", item.position_column
+      assert_equal "pos", item.slot_column
     end
 
     def test_insert
@@ -140,7 +140,7 @@ module Shared
       assert_equal false, ListMixin.find(1).in_list?
     end
 
-    def test_remove_from_list_should_set_position_to_nil
+    def test_remove_from_list_should_set_slot_to_nil
       assert_equal [1, 2, 3, 4], ListMixin.find(:all, :conditions => 'parent_id = 5', :order => 'pos').map(&:id)
 
       ListMixin.find(2).remove_from_list
@@ -166,7 +166,7 @@ module Shared
       assert_equal 3, ListMixin.find(4).pos
     end
 
-    def test_before_destroy_callbacks_do_not_update_position_to_nil_before_deleting_the_record
+    def test_before_destroy_callbacks_do_not_update_slot_to_nil_before_deleting_the_record
       assert_equal [1, 2, 3, 4], ListMixin.find(:all, :conditions => 'parent_id = 5', :order => 'pos').map(&:id)
 
       # We need to trigger all the before_destroy callbacks without actually
@@ -201,7 +201,7 @@ module Shared
       assert_equal [1, 2, 3, 4, 5], ListMixin.find(:all, :conditions => 'parent_id = 5', :order => 'pos').map(&:id)
     end
 
-    def test_before_create_callback_adds_to_given_position
+    def test_before_create_callback_adds_to_given_slot
       assert_equal [1, 2, 3, 4], ListMixin.find(:all, :conditions => 'parent_id = 5', :order => 'pos').map(&:id)
 
       new = ListMixin.create(:pos => 1, :parent_id => 5)

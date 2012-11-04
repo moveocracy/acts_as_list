@@ -46,7 +46,7 @@ module Shared
 
     def test_injection
       item = ArrayScopeListMixin.new(:parent_id => 1, :parent_type => 'ParentClass')
-      assert_equal "pos", item.position_column
+      assert_equal "pos", item.slot_column
     end
 
     def test_insert
@@ -131,7 +131,7 @@ module Shared
       assert_equal false, ArrayScopeListMixin.find(1).in_list?
     end
 
-    def test_remove_from_list_should_set_position_to_nil
+    def test_remove_from_list_should_set_slot_to_nil
       assert_equal [1, 2, 3, 4], ArrayScopeListMixin.find(:all, :conditions => "parent_id = 5 AND parent_type = 'ParentClass'", :order => 'pos').map(&:id)
 
       ArrayScopeListMixin.find(2).remove_from_list
